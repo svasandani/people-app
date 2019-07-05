@@ -1,19 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="content-wrap">
   <div class="card-search">
-    <h1 class="search-headling">Artist Directory</h1>
-    <label class="search-label">search <span *ngIf="query" [innerHTML]="'for: ' + query"></span></label>
-    <div class="input-form">
-      <input class="search-input" [(ngModel)]="query" placeholder="type in search term here" />
-    </div>
+    <mat-toolbar color="primary">
+      <h1 class="search-headling">Artist Directory</h1>
+      <!-- <span *ngIf="query" [innerHTML]="'searching for '+ query"></span> -->
+    </mat-toolbar>
   </div>
 
-  <div class="body">
-    <ul *ngIf="query">
-      <li class="artistlist-item cf" *ngFor="let item of (artists | search: query)">
+  <div class="body" gdAreas="search | body | details" gdGap="-10px" gdRows="auto auto auto">
+    <mat-form-field>
+      <input matInput class="search-input" [(ngModel)]="query" (input)="currentArtist=''" placeholder="Artist" />
+    </mat-form-field>
+    <div *ngIf="query">
+      <mat-card fxLayout="column" fxLayoutGap="20px" class="artistlist-item cf" *ngFor="let item of (artists | search: query)">
         <app-artist-item class="content" [artist]="item" (click)="showArtist(item); query='';"></app-artist-item>
-      </li>
-    </ul>
+      </mat-card>
+    </div>
     <app-artist-details *ngIf="currentArtist" class="content" [artist]="currentArtist"></app-artist-details>
   </div>
 </div>
